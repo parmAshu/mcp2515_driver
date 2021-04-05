@@ -6,6 +6,10 @@
 
 #include "mcp2515_driver_pal.h"
 
+static uint8_t SS_PIN;
+
+SPISettings mcp2515_setings(10000000, MSBFIRST, SPI_MODE0);
+
 /**
  * @brief This PAL API will be called by core APIs to initialize the SPI port.
  * 
@@ -20,6 +24,24 @@
 void pal_spi_init(void* data, uint8_t data_direction, uint8_t idle_level, uint8_t shift_edge)
 {
     /* !...Platform Specific Code here...! */
+
+    SPI.begin();
+
+    SPI.setBitOrder(MSBFIRST);
+
+    SPI.setDataMode(SPI_MODE0);
+
+    SPI.setClockDivider(SPI_CLOCK_DIV2);
+
+    SS_PIN = ((mcp2515_driver_config *)data)->ss_pin;
+
+    pinMode(SS_PIN, OUTPUT);
+
+    digitalWrite(SS_PIN, HIGH);
+
+    SPI.beginTransaction(mcp2515_setings);
+    SPI.endTransaction();
+
 }
 
 /**
@@ -33,6 +55,7 @@ void pal_spi_init(void* data, uint8_t data_direction, uint8_t idle_level, uint8_
 void pal_select_slave(void)
 {
     /* !...Platform Specific Code here...! */
+    digitalWrite(SS_PIN, LOW);
 }
 
 /**
@@ -46,6 +69,7 @@ void pal_select_slave(void)
 void pal_deselect_slave(void)
 {
     /* !...Platform Specific Code here...! */
+    digitalWrite(SS_PIN, HIGH);
 }
 
 /**
@@ -60,6 +84,7 @@ void pal_deselect_slave(void)
 void pal_spi_send(uint8_t byt)
 {
     /* !...Platform Specific Code here...! */
+    SPI.transfer(byt);
 }
 
 /**
@@ -74,4 +99,5 @@ void pal_spi_send(uint8_t byt)
 uint8_t pal_spi_read(void)
 {
     /* !...Platform Specific Code here...! */
+    return SPI.transfer(0XFF);
 }

@@ -6,11 +6,8 @@
 #ifndef MCP2515_DRIVER_PAL_DEFS
 #define MCP2515_DRIVER_PAL_DEFS
 
-/**
- * Include Platform specfic header files over here.
- * 
- * Define any custom types below (if required).
-*/
+#include <Arduino.h>
+#include <SPI.h>
 
 #define MSB_FIRST 1
 #define LSB_FIRST 0
@@ -21,13 +18,8 @@
 #define LEADING_EDGE 1
 #define TRAILING_EDGE 0
 
-/**
- * If the platform does not support types - 1. uint8_t, uint16_t, uin32_t then uncomment and stuitably modify the following lines.
- * 
-*/
-// typedef unsigned char uint8_t;
-// typedef unigend short int uint16_t;
-// typedef unsigned int uint32_t;
-// typedef unsigned long uin64_t;
+typedef struct mcp2515_driver_config{ 
+    uint8_t ss_pin;
+}mcp2515_driver_config;
 
 #endif

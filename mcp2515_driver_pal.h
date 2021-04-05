@@ -20,6 +20,7 @@
 inline void pal_delay_ms(uint32_t _int)
 {
     /* !...Platform Specific Code here...! */
+    delay(_int);
 }
 
 /**
@@ -34,6 +35,7 @@ inline void pal_delay_ms(uint32_t _int)
 inline void pal_delay_us(uint32_t _int)
 {
     /* !...Platform Specific Code here...! */
+    delayMicroseconds(_int);
 }
 
 
