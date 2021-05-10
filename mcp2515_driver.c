@@ -995,7 +995,7 @@ void enableRX(uint8_t _buff)
  * 1. _buff : the receive buffer number.
  *
  * @return
- * NOTHING
+ * 
  */
 uint8_t canIsFilledRX(uint8_t _buff)
 {
@@ -1091,8 +1091,9 @@ void canSetFilterRX(uint8_t _num, CAN_FRAME_TYPE _frame, uint32_t _filter)
 		pal_deselect_slave();
 		return;
 	}
+	/*!!!!!!########*/
 	else if(_frame == can_extended)
-		pal_spi_send( (_filter >> 13 & 0XE)  | (_filter>>16 & 3) | (1<<EXIDE) );
+		pal_spi_send( (_filter >> 13 & 0XE0)  | (_filter>>16 & 3) | (1<<EXIDE) );
 	pal_spi_send( (_filter >> 8) );
 	pal_spi_send( _filter );
 
