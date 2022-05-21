@@ -4,7 +4,7 @@
  * @brief This file contains the core driver APIs.
 */
 
-#include "mcp2515_driver.h"
+#include "mcp2515Driver.h"
 
 static CAN_FRAME _frame={ can_standard, 0, 0, 0, {0,0,0,0,0,0,0,0} };
 
